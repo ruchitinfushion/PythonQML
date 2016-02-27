@@ -35,10 +35,24 @@ from PyQt5.QtQml import qmlRegisterType, QQmlApplicationEngine
 class QmlController(QObject):
     def __init__(self, parent=None):
         super(QObject, self).__init__(parent)
+        self.lastSwitchedState = False
+    @pyqtSlot()
+    def logButton(self):
+        print('Pressed')
 
     @pyqtSlot()
-    def log(self):
-        print('QmlController logs some stuff')
+    def logFileDialog(self):
+        print('File selected')
+
+    @pyqtSlot('bool')
+    def logSwitch(self, state):
+        if self.lastSwitchedState is state:
+            return
+        self.lastSwitchedState = state
+        if state:
+            print('Switch on')
+        else:
+            print('Switch off')
 
 
 def main(argv=None):

@@ -30,10 +30,10 @@ import QmlController 1.0
 
 //main window
 ApplicationWindow {
-    id: applicationWindow1
+    id: mainWindow
     visible: true
     width: 200
-    height: 100
+    height: 150
     title: "Python/Qml test"
 
     menuBar: MenuBar {
@@ -47,23 +47,40 @@ ApplicationWindow {
     }
 
     Button {
+        id: pushButton
         text: "Push Me"
-        anchors.centerIn: parent
-        onClicked: controller.log()
+        anchors.verticalCenterOffset: -20
+        anchors.centerIn: gridLayout
+        onClicked: controller.logButton()
+    }
+
+    Switch {
+        id: switchButton
+        anchors.verticalCenterOffset: 20
+        anchors.centerIn: gridLayout
+        onPressedChanged: controller.logSwitch(checked)
     }
 
     Action {
         id: fileOpenAction
         text: "Open"
         shortcut: StandardKey.Open
-        onTriggered: fileOpenDialog.open()
     }
 
     FileDialog {
         id: fileOpenDialog
         title: "Please choose a file to open"
         nameFilters: ["Text files (*.txt)"]
-        onAccepted: controller.log()
+        onAccepted: controller.logFileDialog()
+    }
+
+    GridLayout {
+        id: gridLayout
+        x: 0
+        y: 0
+        width: parent.width
+        height: parent.height
+        anchors.centerIn: parent
     }
 
     QmlController {
